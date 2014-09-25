@@ -12,11 +12,11 @@ class Erro(Exception):
 
 
 class Conversor():
-    exp1 = re.compile("\$\w+\s+(\d+|\w+)")
-    exp2 = re.compile("(@|\w+)\s+IN\s+SOA\s+\w+\s+\w+\s+\(")
-    exp3 = re.compile("(\d+|\d+[MHDW])\s*[;)]")
-    exp4 = re.compile("NS \w")
-    exp5 = re.compile("\w+\s+IN\s+A\s+(\d+[.]?)+")
+    exp1 = re.compile("\s*\$\w+\s+(\d+|\w+)")
+    exp2 = re.compile("\s*(\@|\w+)\s+[\w.\s]+\(")
+    exp3 = re.compile("\s*(\d+|\d+[MHDW])\s*[;)]")
+    exp4 = re.compile("\s*(IN)?\s*NS\s+\w")
+    exp5 = re.compile("\s*\w+\s+IN\s+A\s+(\d+[.]?)+")
     fqdn = ""
 
     def __init__(self, arquivoEntrada, arquivoSaida="saida"):
@@ -27,7 +27,7 @@ class Conversor():
         for line in sys.stdin:
             if self.exp1.match(line) != None or self.exp2.match(line) != None \
                     or self.exp3.match(line) != None:
-                print(line)
+                print(line, end="")
             elif self.exp4.match(line) != None:
                 print(line)
                 v = line.split()
